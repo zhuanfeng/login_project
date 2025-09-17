@@ -20,8 +20,8 @@ def create_app():
     with app.app_context():
         db.create_all()
     
-    # 注册路由（稍后实现）
-    # from .routes import api
-    # app.register_blueprint(api)
+    # 注册路由
+    from .routes import api
+    app.register_blueprint(api)
     
     return app
