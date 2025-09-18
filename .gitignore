@@ -4,3 +4,7 @@
 数据库文件
 server/database.db
 server/app/__pycache__/
+
+前端文件
+client/node_modules/
+package-lock.json
