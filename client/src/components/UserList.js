@@ -14,6 +14,16 @@ const UserList = () => {
   
   // 搜索关键字状态
   const [keyword, setKeyword] = useState('');
+  
+  // 分页相关状态
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [hasNext, setHasNext] = useState(false);
+  const [hasPrev, setHasPrev] = useState(false);
+  
+  // 分页配置
+  const USERS_PER_PAGE = 10;
 
   // 格式化日期 - 使用useCallback确保函数稳定
   const formatDate = useCallback((dateString) => {
@@ -29,12 +39,16 @@ const UserList = () => {
   }, []);
 
   // 加载用户列表 - 使用useCallback避免重复创建
-  const loadUsers = useCallback(async (searchKeyword = '') => {
+  const loadUsers = useCallback(async (searchKeyword = '', page = 1) => {
     setLoading(true);
     setError('');
     
     try {
-      const params = {};
+      const params = {
+        limit: USERS_PER_PAGE,
+        offset: (page - 1) * USERS_PER_PAGE
+      };
+      
       if (searchKeyword.trim()) {
         params.keyword = searchKeyword.trim();
       }
@@ -42,7 +56,16 @@ const UserList = () => {
       const result = await userAPI.getUserList(params);
       
       if (result.success) {
-        setUsers(result.data.users || []);
+        const data = result.data;
+        setUsers(data.users || []);
+        
+        // 更新分页信息
+        const pagination = data.pagination || {};
+        setTotalUsers(pagination.total || 0);
+        setHasNext(pagination.has_next || false);
+        setHasPrev(pagination.has_prev || false);
+        setTotalPages(Math.ceil((pagination.total || 0) / USERS_PER_PAGE));
+        setCurrentPage(page);
       } else {
         // 显示后端返回的具体错误信息
         const errorData = result.error || {};
@@ -68,7 +91,7 @@ const UserList = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [USERS_PER_PAGE]);
 
   // 组件挂载时加载用户列表
   useEffect(() => {
@@ -78,7 +101,9 @@ const UserList = () => {
   // 搜索关键字变化时实时搜索 - 使用防抖延迟
   useEffect(() => {
     const timer = setTimeout(() => {
-      loadUsers(keyword);
+      // 搜索时重置到第一页
+      setCurrentPage(1);
+      loadUsers(keyword, 1);
     }, 300); // 300ms防抖延迟
 
     return () => clearTimeout(timer);
@@ -99,6 +124,23 @@ const UserList = () => {
   const handleClearSearch = useCallback(() => {
     setKeyword('');
   }, []);
+
+  // 分页处理函数
+  const handlePrevPage = useCallback(() => {
+    if (hasPrev) {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      loadUsers(keyword, newPage);
+    }
+  }, [hasPrev, currentPage, keyword, loadUsers]);
+
+  const handleNextPage = useCallback(() => {
+    if (hasNext) {
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      loadUsers(keyword, newPage);
+    }
+  }, [hasNext, currentPage, keyword, loadUsers]);
 
   // 搜索框组件 - 使用useMemo优化渲染
   const searchBoxComponent = useMemo(() => (
@@ -183,12 +225,40 @@ const UserList = () => {
             </tbody>
           </table>
         </div>
-        <div className="user-count">
-          共 {users.length} 个用户
+        {/* 分页组件 */}
+        <div className="pagination-container">
+          <div className="pagination-info">
+            {keyword ? (
+              <span>搜索到 {totalUsers} 个用户，当前第 {currentPage}/{totalPages} 页</span>
+            ) : (
+              <span>共 {totalUsers} 个用户，当前第 {currentPage}/{totalPages} 页</span>
+            )}
+          </div>
+          {totalPages > 1 && (
+            <div className="pagination-controls">
+              <button 
+                onClick={handlePrevPage} 
+                disabled={!hasPrev}
+                className="pagination-btn prev-btn"
+              >
+                上一页
+              </button>
+              <span className="page-info">
+                {currentPage} / {totalPages}
+              </span>
+              <button 
+                onClick={handleNextPage} 
+                disabled={!hasNext}
+                className="pagination-btn next-btn"
+              >
+                下一页
+              </button>
+            </div>
+          )}
         </div>
       </>
     );
-  }, [users, loading, error, keyword, handleRefresh, formatDate]);
+  }, [users, loading, error, keyword, handleRefresh, formatDate, totalUsers, currentPage, totalPages, hasPrev, hasNext, handlePrevPage, handleNextPage]);
 
   return (
     <div className="user-list-container">

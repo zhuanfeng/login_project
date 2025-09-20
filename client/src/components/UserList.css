@@ -199,6 +199,68 @@
   text-align: right;
 }
 
+/* 分页容器 */
+.pagination-container {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* 分页信息 */
+.pagination-info {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 分页控制按钮组 */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 分页按钮 */
+.pagination-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-btn:disabled {
+  background-color: #f8f9fa;
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: #e0e0e0;
+}
+
+/* 页码信息 */
+.page-info {
+  padding: 8px 12px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+  min-width: 60px;
+  text-align: center;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .user-list-container {
@@ -245,5 +307,10 @@
   
   .user-count {
     text-align: center;
+  }
+  
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 13px;
   }
 }
