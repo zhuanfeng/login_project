@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import os
 
 def create_app():
     """创建Flask应用"""
     app = Flask(__name__)
+    
+    # 配置CORS，允许前端访问
+    CORS(app, origins=['http://localhost:3000'])
     
     # 配置数据库
     basedir = os.path.abspath(os.path.dirname(__file__))
