@@ -22,6 +22,8 @@
   padding: 20px;
   border-bottom: 1px solid #e0e0e0;
   background-color: #f8f9fa;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .user-list-header h2 {
@@ -29,6 +31,67 @@
   color: #333;
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+/* 头部控制区域 */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* 搜索框容器 */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* 搜索输入框 */
+.search-input {
+  padding: 8px 32px 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 200px;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* 清空搜索按钮 */
+.clear-search-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.clear-search-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
 }
 
 /* 刷新按钮 */
@@ -146,6 +209,18 @@
     flex-direction: column;
     gap: 15px;
     text-align: center;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    max-width: 280px;
   }
   
   .user-table {
