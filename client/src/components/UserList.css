@@ -1,0 +1,174 @@
+/* 用户列表容器 */
+.user-list-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 用户列表卡片 */
+.user-list-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* 用户列表头部 */
+.user-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+}
+
+.user-list-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* 刷新按钮 */
+.refresh-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+
+.refresh-button:active {
+  transform: translateY(1px);
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+/* 错误消息 */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  margin: 20px;
+  border-radius: 4px;
+  border: 1px solid #f5c6cb;
+  text-align: center;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* 表格容器 */
+.user-table-container {
+  overflow-x: auto;
+}
+
+/* 用户表格 */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.user-table th {
+  background-color: #f8f9fa;
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+  white-space: nowrap;
+}
+
+.user-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+}
+
+.user-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* 用户名列样式 */
+.user-table .username {
+  font-weight: 500;
+  color: #007bff;
+}
+
+/* 创建时间列样式 */
+.user-table .created-time {
+  color: #666;
+  font-size: 13px;
+}
+
+/* 用户数量统计 */
+.user-count {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  color: #666;
+  font-size: 14px;
+  text-align: right;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .user-list-container {
+    padding: 10px;
+  }
+  
+  .user-list-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .user-table {
+    font-size: 12px;
+  }
+  
+  .user-table th,
+  .user-table td {
+    padding: 10px 8px;
+  }
+  
+  .user-table .created-time {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-table th:first-child,
+  .user-table td:first-child {
+    display: none;
+  }
+  
+  .user-count {
+    text-align: center;
+  }
+}

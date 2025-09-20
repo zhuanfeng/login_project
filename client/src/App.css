@@ -20,6 +20,11 @@
 
 .App-main {
   padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* 重置一些基础样式 */
